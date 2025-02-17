@@ -7,7 +7,7 @@ ImageSearch_RAG_App is an end-to-end system that demonstrates an image search an
 - **A Streamlit-powered frontend (`app.py`)** that provides a user-friendly interface to interact with the API.
 - **A demo notebook (`Mindlfix_Assignment.ipynb`)** that walks through the backend functionalities, offering a detailed explanation of each processing step.
 
-> **Note:** Two sample folders are also attached (downloaded_images and downloaded_captions as a storage for downloaded data) to store the downloaded images and captions in the backend.
+> **Note:** Two sample folders are also attached (downloaded_images and downloaded_captions as a storage for downloaded data) to store the downloaded images and captions in the backend. Their paths can also be replaced by any other location of the user's choice._
 
 ---
 
