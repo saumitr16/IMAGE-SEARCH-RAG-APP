@@ -7,7 +7,7 @@ ImageSearch_RAG_App is an end-to-end system that demonstrates an image search an
 - **A Streamlit-powered frontend (`app.py`)** that provides a user-friendly interface to interact with the API.
 - **A demo notebook (`Mindlfix_Assignment.ipynb`)** that walks through the backend functionalities, offering a detailed explanation of each processing step.
 
-> **Note:** Two sample folders are also attached to store the downloaded images and captions in the backend.
+> **Note:** Two sample folders are also attached (downloaded_images and downloaded_captions as a storage for downloaded data) to store the downloaded images and captions in the backend.
 
 ---
 
@@ -24,7 +24,10 @@ ImageSearch_RAG_App is an end-to-end system that demonstrates an image search an
 
 ### 2. `app.py`
 - A Streamlit-based client that provides an interactive UI.
-- Run the app by 'streamlit run app.py'
+- Run the app by
+  ```bash
+  streamlit run app.py
+  ```
 - **Key Features:**
   - Ngrok integration: Input field to connect to your FastAPI backend via a public URL.
   - Sidebar option to select between various features:
