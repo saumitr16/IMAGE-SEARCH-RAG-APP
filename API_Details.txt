@@ -1,0 +1,154 @@
+API Details for Mindflix_RAG_Project
+====================================
+
+1. /upload/ Endpoint
+---------------------
+
+Purpose:
+• Accepts either an uploaded image file, a text query, or both.
+• When a text query is provided, it searches for related images on Pexels; when an image file is provided, it downloads similar images.
+• Returns a JSON response with a message, a count of images downloaded, and (if available) a generated image description.
+
+Usage Examples:
+
+• Upload an Image
+  Description: Posts an image file only.
+  
+  curl command:
+  curl -X POST -F "file=@C:\Users\ADMIN\Downloads\test_image.jpg" http://localhost:8000/upload/
+
+• Search Using a Text Query
+  Description: Sends a text query only.
+  
+  curl command:
+  curl -X POST -F "query=sunset" http://localhost:8000/upload/
+
+• Upload an Image and Provide a Text Query
+  Description: Sends both an image file and a text query in the same request.
+  
+  curl command:
+  curl -X POST -F "query=sunset" -F "file=@C:\Users\ADMIN\Downloads\test_image.jpg" http://localhost:8000/upload/
+
+Expected JSON Output Example:
+{
+  "message": "Images downloaded successfully",
+  "count": 10,
+  "generated_description": "A beautiful sunset over the beach"
+}
+
+2. /generate_captions/ Endpoint
+--------------------------------
+
+Purpose:
+• Processes all images found in the downloaded_images folder.
+• Generates captions for each image.
+
+Usage Example:
+
+  curl command:
+  curl -X POST http://localhost:8000/generate_captions/
+
+Expected JSON Output Example:
+{
+  "message": "Captions generated successfully"
+}
+
+3. /store_embeddings/ Endpoint
+-------------------------------
+
+Purpose:
+• Computes and stores embeddings for all images and their captions in Pinecone.
+
+Usage Example:
+
+  curl command:
+  curl -X POST http://localhost:8000/store_embeddings/
+
+Expected JSON Output Example:
+{
+  "message": "Embeddings stored in Pinecone successfully",
+  "upserted_files": [
+    "image_1.jpg",
+    "image_2.jpg"
+  ]
+}
+
+4. /search/ Endpoint
+---------------------
+
+Purpose:
+• Searches for similar images in Pinecone based on an image, text, or a combination of both.
+• The operation mode must be specified using the "mode" parameter ("image", "text", or "both").
+
+Usage Examples:
+
+• Search Using an Image
+  Description: Uses an image file as the search input.
+  
+  curl command:
+  curl -X POST -F "mode=image" -F "file=@C:\Users\ADMIN\Downloads\test_image.jpg" http://localhost:8000/search/
+
+• Search Using Text
+  Description: Uses a text query as the search input.
+  
+  curl command:
+  curl -X POST -F "mode=text" -F "text=soccer" http://localhost:8000/search/
+
+• Search Using Both Image and Text
+  Description: Provides both an image file and a text query for the search.
+  
+  curl command:
+  curl -X POST -F "mode=both" -F "file=@C:\Users\ADMIN\Downloads\test_image.jpg" -F "text=soccer" http://localhost:8000/search/
+
+Expected JSON Output Example:
+{
+  "results": [
+    {
+      "id": "image_1",
+      "score": 0.95,
+      "caption": "A beautiful sunset over the beach",
+      "image_path": "/content/downloaded_images/image_1.jpg",
+      "metadata": {
+        "description": "A beautiful sunset over the beach"
+      }
+    }
+  ]
+}
+
+5. Root (/) Endpoint
+---------------------
+
+Purpose:
+• A simple GET endpoint to verify that the API is running and accessible.
+
+Usage Example:
+
+  curl command:
+  curl -X GET http://localhost:8000/
+
+Expected JSON Output Example:
+{
+  "message": "Welcome to the Image Search API!"
+}
+
+Additional Notes
+-----------------
+
+• Replace File Paths:
+  Ensure you replace "C:\Users\ADMIN\Downloads\test_image.jpg" with the actual path to your image file.
+
+• API Keys and Environment Variables:
+  Verify that any necessary API keys (e.g., for Pexels or Pinecone) are correctly set in your code or environment.
+
+• Running the Server:
+  Before executing the curl commands, start your FastAPI server. For example, if your FastAPI app is defined in api.py, start it with:
+
+    curl command:
+    uvicorn api:app --reload
+
+  If you're exposing your local server via Ngrok, launch ngrok as:
+
+    curl command:
+    ngrok http 8000
+
+  Replace "http://localhost:8000/" in the curl commands with your Ngrok public URL if needed (e.g., "https://abcd-1234-5678.ngrok-free.app/").

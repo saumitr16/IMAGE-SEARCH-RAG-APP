@@ -1,0 +1,15 @@
+fastapi
+python-multipart
+uvicorn
+requests
+pillow
+torch
+numpy
+transformers
+pinecone-client
+python-dotenv
+dotenv
+torchvision
+nest-asyncio 
+pyngrok
+streamlit
